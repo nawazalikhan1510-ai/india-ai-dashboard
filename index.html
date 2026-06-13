@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India AI Job Exposure Dashboard 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:    #D63B3B;
+    --orange: #E07B2A;
+    --amber:  #C9941A;
+    --green:  #2E8B57;
+    --ink:    #0F1117;
+    --ink2:   #2A2D38;
+    --muted:  #6B7280;
+    --border: #E5E7EB;
+    --bg:     #F7F8FA;
+    --white:  #FFFFFF;
+    --saffron:#FF6B00;
+    --panel:  #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(255,107,0,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow span {
+    width: 24px; height: 1.5px;
+    background: var(--saffron);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.08;
+    max-width: 700px;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--saffron);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .hero-sources {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.7;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+  }
+
+  /* ── KPI BAND ── */
+  .kpi-band {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0;
+    background: var(--ink2);
+  }
+  .kpi-cell {
+    padding: 24px 28px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .kpi-num.red    { color: var(--red); }
+  .kpi-num.orange { color: var(--saffron); }
+  .kpi-num.green  { color: #4ADE80; }
+  .kpi-lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.4;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+    border-radius: 0;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--saffron);
+    border-bottom-color: var(--saffron);
+    font-weight: 600;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── SECTION HEADING ── */
+  .section-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── TREEMAP ── */
+  .treemap-legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  #treemap-wrap { position: relative; }
+  #treemap-svg { width: 100%; display: block; border-radius: 12px; overflow: hidden; }
+
+  .tooltip {
+    position: absolute;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 100;
+    max-width: 210px;
+    display: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  }
+  .tt-name { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: #fff; }
+  .tt-row { display: flex; justify-content: space-between; gap: 14px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+  .tt-val { color: #fff; font-weight: 600; }
+
+  /* ── RANKED LIST ── */
+  .ranked-header {
+    display: grid;
+    grid-template-columns: 1fr 110px 170px 56px;
+    gap: 8px;
+    padding: 0 0 8px;
+    border-bottom: 2px solid var(--border);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ranked-header .rh-score { text-align: right; }
+  .ranked-header .rh-workers { text-align: right; }
+  .sector-row {
+    display: grid;
+    grid-template-columns: 1fr 110px 170px 56px;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--border);
+    cursor: default;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .sector-row:hover { background: var(--bg); }
+  .s-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .s-sub  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .s-workers { font-size: 12px; color: var(--muted); text-align: right; }
+  .bar-wrap { height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .score-badge { font-size: 13px; font-weight: 700; text-align: right; }
+
+  /* ── TIMELINE ── */
+  .timeline-wrap { display: flex; flex-direction: column; gap: 28px; }
+  .tl-year-block { display: grid; grid-template-columns: 56px 1fr; gap: 20px; align-items: start; }
+  .tl-year {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink);
+    padding-top: 4px;
+  }
+  .tl-cards { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tl-card {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .tl-red    { background: #FEE2E2; color: #7F1D1D; border: 1px solid #FECACA; }
+  .tl-amber  { background: #FEF3C7; color: #78350F; border: 1px solid #FDE68A; }
+  .tl-green  { background: #D1FAE5; color: #064E3B; border: 1px solid #A7F3D0; }
+  .tl-divider { height: 1px; background: var(--border); margin: 4px 0 0; }
+
+  /* ── INSIGHTS ── */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .insight-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .insight-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .ic-icon  { font-size: 22px; margin-bottom: 10px; }
+  .ic-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .ic-body  { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 32px 24px 48px;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+  .footer strong { color: var(--ink); }
+
+  /* ── RISK LEGEND PILL ── */
+  .risk-legend {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .risk-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .rp-red    { background: #FEE2E2; color: #7F1D1D; }
+  .rp-orange { background: #FEF3C7; color: #78350F; }
+  .rp-amber  { background: #FEF3C7; color: #78350F; }
+  .rp-green  { background: #D1FAE5; color: #064E3B; }
+
+  /* ── CITIES ── */
+  .cities-intro {
+    font-size: 13px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 20px; max-width: 700px;
+  }
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .city-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .city-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .city-card.risk-very-high::before { background: var(--red); }
+  .city-card.risk-high::before      { background: var(--orange); }
+  .city-card.risk-medium::before    { background: var(--amber); }
+  .city-card.risk-low::before       { background: var(--green); }
+  .city-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-3px); }
+
+  .city-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .city-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--ink); }
+  .city-state { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .city-score-wrap { text-align: right; }
+  .city-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px; font-weight: 800; line-height: 1;
+  }
+  .city-score-lbl { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+  .city-workers {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .city-stat { }
+  .city-stat-num { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .city-stat-lbl { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+  .city-bar-row { margin-bottom: 14px; }
+  .city-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .city-bar-wrap { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .city-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+
+  .city-industries { margin-bottom: 12px; }
+  .city-ind-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  .city-ind-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .city-ind-tag {
+    font-size: 11px; padding: 3px 9px; border-radius: 20px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--ink2); font-weight: 500;
+  }
+  .city-ind-tag.danger { background: #FEE2E2; border-color: #FECACA; color: #7F1D1D; }
+  .city-ind-tag.warning { background: #FEF3C7; border-color: #FDE68A; color: #78350F; }
+  .city-ind-tag.safe { background: #D1FAE5; border-color: #A7F3D0; color: #064E3B; }
+
+  .city-impact { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .city-impact-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 7px; }
+  .city-wave { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .city-wave-year { font-size: 11px; font-weight: 700; color: var(--ink); width: 32px; flex-shrink: 0; }
+  .city-wave-text { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  .cities-ranking {
+    margin-top: 32px;
+  }
+  .cr-header {
+    display: grid;
+    grid-template-columns: 28px 1fr 90px 160px 56px;
+    gap: 8px; padding: 0 8px 8px;
+    border-bottom: 2px solid var(--border);
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  }
+  .cr-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 90px 160px 56px;
+    align-items: center; gap: 8px;
+    padding: 11px 8px; border-bottom: 1px solid var(--border);
+    border-radius: 6px; transition: background 0.15s;
+  }
+  .cr-row:hover { background: var(--bg); }
+  .cr-rank { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .cr-city-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .cr-city-state { font-size: 11px; color: var(--muted); }
+  .cr-at-risk { font-size: 12px; color: var(--muted); text-align: right; }
+  .cr-bar-wrap { height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .cr-bar-fill { height: 100%; border-radius: 4px; }
+  .cr-score { font-size: 13px; font-weight: 700; text-align: right; }
+
+  @media (max-width: 640px) {
+    .hero { padding: 36px 20px 32px; }
+    .kpi-band { grid-template-columns: repeat(2, 1fr); }
+    .kpi-cell { border-right: 1px solid rgba(255,255,255,0.08); }
+    .kpi-cell:nth-child(2n) { border-right: none; }
+    .ranked-header, .sector-row { grid-template-columns: 1fr 90px 120px 44px; }
+    .tl-year-block { grid-template-columns: 44px 1fr; }
+    .main { padding: 24px 16px 60px; }
+  }
+  @media (max-width: 420px) {
+    .ranked-header, .sector-row { grid-template-columns: 1fr 80px 44px; }
+    .ranked-header .rh-bar, .sector-row .bar-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow"><span></span>Data Report · June 2026<span></span></div>
+  <h1>Which Indian Jobs<br>Will <em>AI Replace</em> —<br>and Which Won't</h1>
+  <p class="hero-sub">
+    A Karpathy-style AI exposure analysis for India's 616 million workers.
+    Every sector ranked by how much of its output an AI can replicate today.
+  </p>
+  <div class="hero-sources">
+    Sources: PLFS 2025 (MoSPI) · RBI KLEMS 2024 · NASSCOM Strategic Review 2024 · ILO India Employment Report 2024 · IMF 2024 · WEF Future of Jobs 2025 · McKinsey Global Institute · Economic Survey 2025–26
+  </div>
+</div>
+
+<!-- KPI BAND -->
+<div class="kpi-band">
+  <div class="kpi-cell">
+    <div class="kpi-num">61.6 Cr</div>
+    <div class="kpi-lbl">Total workers aged 15+<br>(PLFS 2025)</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num red">26%</div>
+    <div class="kpi-lbl">Exposed to GenAI<br>(IMF 2024)</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num red">12%</div>
+    <div class="kpi-lbl">At direct<br>displacement risk</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num orange">5.4M</div>
+    <div class="kpi-lbl">IT/BPO workers<br>(NASSCOM FY24)</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num red">65K+</div>
+    <div class="kpi-lbl">IT jobs lost in 2024<br>(TCS + Infy + Wipro)</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num green">₹621B</div>
+    <div class="kpi-lbl">AI GDP opportunity<br>(NASSCOM estimate)</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('treemap', this)">🗺 Exposure Map</button>
+    <button class="tab-btn" onclick="switchTab('ranked', this)">📊 All Sectors Ranked</button>
+    <button class="tab-btn" onclick="switchTab('timeline', this)">📅 2026–2030 Timeline</button>
+    <button class="tab-btn" onclick="switchTab('insights', this)">💡 Key Insights</button>
+    <button class="tab-btn" onclick="switchTab('cities', this)">🏙 Cities at Risk</button>
+  </div>
+
+  <!-- TREEMAP PANEL -->
+  <div id="tab-treemap" class="panel active">
+    <p class="section-label">AI Exposure Score (0–10) · Box size = workforce size</p>
+    <div class="treemap-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#D63B3B"></div>Very High Risk (8–10)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E07B2A"></div>High Risk (6–7)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C9941A"></div>Medium Risk (4–5)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2E8B57"></div>Low Risk (0–3)</div>
+    </div>
+    <div id="treemap-wrap">
+      <svg id="treemap-svg"></svg>
+      <div class="tooltip" id="tooltip">
+        <div class="tt-name" id="tt-name"></div>
+        <div class="tt-row"><span>AI Exposure</span><span class="tt-val" id="tt-score"></span></div>
+        <div class="tt-row"><span>Workers</span><span class="tt-val" id="tt-workers"></span></div>
+        <div class="tt-row"><span>Avg Salary</span><span class="tt-val" id="tt-salary"></span></div>
+        <div class="tt-row"><span>Risk by 2030</span><span class="tt-val" id="tt-risk"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RANKED PANEL -->
+  <div id="tab-ranked" class="panel">
+    <p class="section-label">All sectors — sorted by AI exposure score (highest first)</p>
+    <div class="ranked-header">
+      <span>Sector</span>
+      <span class="rh-workers">Workers</span>
+      <span class="rh-bar">AI Exposure</span>
+      <span class="rh-score">Score</span>
+    </div>
+    <div id="sector-list"></div>
+  </div>
+
+  <!-- TIMELINE PANEL -->
+  <div id="tab-timeline" class="panel">
+    <p class="section-label">What AI will do to Indian jobs — year by year</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+      <span class="tl-card tl-red">🔴 Job loss / displacement</span>
+      <span class="tl-card tl-amber">🟡 Transformation / uncertainty</span>
+      <span class="tl-card tl-green">🟢 New opportunities</span>
+    </div>
+    <div class="timeline-wrap" id="timeline-grid"></div>
+  </div>
+
+  <!-- INSIGHTS PANEL -->
+  <div id="tab-insights" class="panel">
+    <p class="section-label">Key findings from credible research</p>
+    <div class="insights-grid" id="insight-grid"></div>
+  </div>
+
+  <!-- CITIES PANEL -->
+  <div id="tab-cities" class="panel">
+    <p class="section-label">Which Indian cities are most exposed to AI disruption</p>
+    <p class="cities-intro">
+      Not all cities will feel AI equally. India's tech hubs — built on the same IT and BPO work that AI automates best — face the sharpest disruption. But physical-economy cities, manufacturing belts, and agricultural regions have a natural buffer. Here's how India's major cities rank.
+    </p>
+    <div class="city-grid" id="city-grid"></div>
+    <div class="cities-ranking">
+      <p class="section-label" style="margin-bottom:12px;">All cities ranked by AI exposure score</p>
+      <div class="cr-header">
+        <span>#</span>
+        <span>City</span>
+        <span style="text-align:right">At-Risk Jobs</span>
+        <span>Exposure Level</span>
+        <span style="text-align:right">Score</span>
+      </div>
+      <div id="city-ranking-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>India AI Job Exposure Dashboard</strong> · Built using publicly available data from PLFS, NASSCOM, IMF, WEF, ILO, RBI KLEMS & McKinsey · June 2026<br>
+  <span style="margin-top:6px;display:block;">Inspired by Andrej Karpathy's AI Exposure framework applied to the US Bureau of Labor Statistics</span>
+</div>
+
+<script>
+const sectors = [
+  {name:"BPO / Call Centres",       sub:"Customer support, data processing",    workers:"~4.4M",     workersN:4.4,  salary:"₹3–5 LPA",   score:9.5, risk:"Very High", src:"NASSCOM 2024"},
+  {name:"Data Entry & Back Office",  sub:"Document processing, clerks",           workers:"~6M",       workersN:6,    salary:"₹2–4 LPA",   score:9.5, risk:"Very High", src:"PLFS 2025"},
+  {name:"Software & IT Services",    sub:"Coding, testing, maintenance",          workers:"5.4M",      workersN:5.4,  salary:"₹8–18 LPA",  score:9.0, risk:"Very High", src:"NASSCOM"},
+  {name:"Banking & Finance Clerks",  sub:"KYC, reconciliation, loan ops",         workers:"~1.5M",     workersN:1.5,  salary:"₹4–8 LPA",   score:8.5, risk:"Very High", src:"RBI KLEMS"},
+  {name:"Legal Assistants",          sub:"Research, document drafting",           workers:"~400K",     workersN:0.4,  salary:"₹4–10 LPA",  score:8.0, risk:"High",      src:"ILO 2024"},
+  {name:"Content & Media",           sub:"Writers, editors, journalists",         workers:"~500K",     workersN:0.5,  salary:"₹3–10 LPA",  score:8.0, risk:"High",      src:"PLFS"},
+  {name:"Accounting & Audit",        sub:"Bookkeeping, tax filing",               workers:"~3M",       workersN:3,    salary:"₹4–12 LPA",  score:8.0, risk:"High",      src:"ICAI"},
+  {name:"Graphic & UI Design",       sub:"Creative production roles",             workers:"~800K",     workersN:0.8,  salary:"₹4–12 LPA",  score:7.5, risk:"High",      src:"NASSCOM"},
+  {name:"Insurance & Claims",        sub:"Processing, underwriting support",      workers:"~600K",     workersN:0.6,  salary:"₹3–7 LPA",   score:7.5, risk:"High",      src:"IRDAI"},
+  {name:"Telecom & Networks",        sub:"Support, billing, admin",               workers:"~400K",     workersN:0.4,  salary:"₹4–9 LPA",   score:7.0, risk:"High",      src:"TRAI"},
+  {name:"E-commerce & Retail",       sub:"Catalogue, customer ops",               workers:"~3M",       workersN:3,    salary:"₹2–5 LPA",   score:6.5, risk:"Medium-High",src:"IBEF"},
+  {name:"Education & EdTech",        sub:"Teaching, tutoring, admin",             workers:"~10M",      workersN:10,   salary:"₹2–8 LPA",   score:6.0, risk:"Medium",    src:"PLFS 2025"},
+  {name:"Healthcare Admin",          sub:"Medical records, billing",              workers:"~2M",       workersN:2,    salary:"₹3–6 LPA",   score:6.0, risk:"Medium",    src:"MoHFW"},
+  {name:"Logistics & Supply Chain",  sub:"Routing, warehousing ops",              workers:"~22M",      workersN:22,   salary:"₹2–5 LPA",   score:5.5, risk:"Medium",    src:"DPIIT"},
+  {name:"Retail & Trade",            sub:"Organised retail, kirana",              workers:"~65M",      workersN:65,   salary:"₹1.5–4 LPA", score:5.0, risk:"Medium",    src:"PLFS 2025"},
+  {name:"Hospitality & Tourism",     sub:"Hotels, restaurants, travel",           workers:"~28M",      workersN:28,   salary:"₹1.5–5 LPA", score:4.5, risk:"Medium-Low", src:"PLFS"},
+  {name:"Manufacturing",             sub:"Factories, production floors",          workers:"~58M",      workersN:58,   salary:"₹1.5–5 LPA", score:4.0, risk:"Medium-Low", src:"ASI 2023"},
+  {name:"Healthcare (Clinical)",     sub:"Doctors, nurses, paramedics",           workers:"~7M",       workersN:7,    salary:"₹3–20 LPA",  score:3.5, risk:"Low-Medium", src:"MoHFW"},
+  {name:"Construction",              sub:"Buildings, infra, civil work",          workers:"~73M",      workersN:73,   salary:"₹1–3 LPA",   score:2.5, risk:"Low",       src:"PLFS 2025"},
+  {name:"Skilled Trades",            sub:"Electricians, plumbers, welders",       workers:"~15M",      workersN:15,   salary:"₹2–5 LPA",   score:2.0, risk:"Low",       src:"NSDC"},
+  {name:"Transport & Drivers",       sub:"Truckers, auto, cab drivers",           workers:"~20M",      workersN:20,   salary:"₹1.5–4 LPA", score:2.0, risk:"Low",       src:"MoRTH"},
+  {name:"Security & Guard Services", sub:"Watchmen, bouncers",                   workers:"~8M",       workersN:8,    salary:"₹1.5–3 LPA", score:2.0, risk:"Low",       src:"PLFS"},
+  {name:"Domestic & Home Care",      sub:"Maids, helpers, caregivers",            workers:"~5M",       workersN:5,    salary:"₹1–2.5 LPA", score:1.5, risk:"Very Low",  src:"PLFS 2025"},
+  {name:"Agriculture & Farming",     sub:"Crop, livestock, fisheries",            workers:"253M",      workersN:253,  salary:"₹0.8–1.5 LPA",score:1.5,risk:"Very Low",  src:"RBI KLEMS"},
+  {name:"Handicrafts & Artisans",    sub:"Weavers, potters, craftspeople",        workers:"~7M",       workersN:7,    salary:"₹1–2.5 LPA", score:1.0, risk:"Very Low",  src:"DC Handicrafts"},
+];
+
+function scoreColor(s) {
+  if (s >= 8) return "#D63B3B";
+  if (s >= 6) return "#E07B2A";
+  if (s >= 4) return "#C9941A";
+  return "#2E8B57";
+}
+
+// ── RANKED LIST ──
+const sorted = [...sectors].sort((a,b) => b.score - a.score);
+const listEl = document.getElementById('sector-list');
+sorted.forEach(s => {
+  const pct = (s.score / 10) * 100;
+  const col = scoreColor(s.score);
+  const row = document.createElement('div');
+  row.className = 'sector-row';
+  row.innerHTML = `
+    <div>
+      <div class="s-name">${s.name}</div>
+      <div class="s-sub">${s.sub}</div>
+    </div>
+    <div class="s-workers">${s.workers}</div>
+    <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
+    <div class="score-badge" style="color:${col}">${s.score}/10</div>
+  `;
+  listEl.appendChild(row);
+});
+
+// ── TIMELINE ──
+const timeline = [
+  {year:"2026", items:[
+    {label:"BPO L1 support roles automated 20–30%", type:"red"},
+    {label:"Data entry & document processing heavily replaced", type:"red"},
+    {label:"Junior software testers displaced by AI QA tools", type:"red"},
+    {label:"AI copilots become mandatory across IT firms", type:"amber"},
+    {label:"Fresher IT hiring drops further (14% intent vs 18.8% in 2024)", type:"amber"},
+    {label:"New roles emerge: AI trainers, prompt engineers, AI auditors", type:"green"},
+  ]},
+  {year:"2027", items:[
+    {label:"1.5M+ IT roles significantly transformed (NASSCOM)", type:"red"},
+    {label:"KYC, loan processing, bank back-office heavily automated", type:"red"},
+    {label:"Legal research assistants and paralegal roles contract 30%", type:"red"},
+    {label:"Mid-level accountants replaced by AI + minimal oversight", type:"amber"},
+    {label:"AI literacy becomes a hiring prerequisite across sectors", type:"amber"},
+    {label:"Healthcare AI tools handle diagnostics support (not doctors)", type:"green"},
+  ]},
+  {year:"2028", items:[
+    {label:"GenAI handles 40–60% of content creation tasks", type:"red"},
+    {label:"Insurance underwriting and claims processing mostly automated", type:"red"},
+    {label:"Call centre headcount shrinks 40–50% from 2024 baseline", type:"red"},
+    {label:"Manufacturing sees robotics + AI process integration", type:"amber"},
+    {label:"Logistics routing fully AI-driven; humans shift to oversight", type:"amber"},
+    {label:"Demand surges for AI engineers, data curators, robot technicians", type:"green"},
+  ]},
+  {year:"2029", items:[
+    {label:"White-collar job losses reach 6–8 crore exposed workers (IMF 12%)", type:"red"},
+    {label:"Entry-level corporate roles drop 50%+ (Anthropic CEO estimate)", type:"red"},
+    {label:"Organised retail automation accelerates with AI billing/inventory", type:"amber"},
+    {label:"Govt reskilling programmes scale (MeitY: 40–45M workers targeted)", type:"amber"},
+    {label:"Physical jobs — construction, farming, trades — remain largely intact", type:"green"},
+  ]},
+  {year:"2030", items:[
+    {label:"92M jobs displaced globally; India: ~6–8 crore affected (WEF)", type:"red"},
+    {label:"IT sector revenues grow but employment decoupled from growth", type:"red"},
+    {label:"170M new jobs globally — India's share in AI infra, green energy, care", type:"green"},
+    {label:"Net outcome: transformation, not elimination — if reskilling succeeds", type:"green"},
+    {label:"India's AI GDP opportunity: ₹621B (~18% of 2023 GDP) unlocked", type:"green"},
+  ]},
+];
+
+const tgEl = document.getElementById('timeline-grid');
+timeline.forEach((yr, i) => {
+  const block = document.createElement('div');
+  block.className = 'tl-year-block';
+  const cards = yr.items.map(it => `<span class="tl-card tl-${it.type}">${it.label}</span>`).join('');
+  block.innerHTML = `<div class="tl-year">${yr.year}</div><div class="tl-cards">${cards}</div>`;
+  tgEl.appendChild(block);
+  if (i < timeline.length - 1) {
+    const div = document.createElement('div');
+    div.className = 'tl-divider';
+    tgEl.appendChild(div);
+  }
+});
+
+// ── INSIGHTS ──
+const insights = [
+  {icon:"💻", title:"The digital rule applies to India too",     body:"If your entire job output is a digital file — code, report, transcript, spreadsheet, legal doc — your exposure is 7+/10. India's entire IT-BPM export model is built on exactly this."},
+  {icon:"🏭", title:"Physical work is much safer",               body:"Construction (73M workers), agriculture (253M), skilled trades, drivers — all score 1–3/10. AI cannot yet hold a trowel, drive in Indian traffic, or harvest rice."},
+  {icon:"⚠️", title:"BPO is India's highest risk sector",       body:"NASSCOM chairman explicitly named BPO as 'maximum risk' for quick AI replacement. India's ₹48.9B BPM sector employs ~1.4M formally — this is the frontline."},
+  {icon:"📉", title:"Freshers are being hit hardest",           body:"Entry-level hiring intent dropped from 18.8% (2024) to 14% (2025). AI is breaking the bottom rungs of the career ladder — most dangerous for new graduates."},
+  {icon:"🔄", title:"Revenue ≠ Jobs anymore",                   body:"TCS lost 13,249 employees while revenues grew. Infosys saw its biggest-ever headcount fall. Output rising + headcount falling = structural decoupling."},
+  {icon:"💰", title:"Higher salary now means higher AI risk",    body:"Unlike previous automation, AI threatens knowledge workers. Banking analysts, legal researchers, financial modellers — all in the ₹8–20 LPA bracket — face 7–9/10 scores."},
+  {icon:"👩", title:"Women concentrated in high-exposure roles", body:"NASSCOM finds women concentrated in customer support, admin, and medical clerking — all 6–9/10 exposure. Access to AI reskilling is the critical intervention."},
+  {icon:"🌱", title:"India's hedge: physical scale",             body:"82% of India's workforce is informal/physical. This actually insulates the majority from AI displacement — unlike the US, where knowledge work dominates."},
+  {icon:"🚀", title:"The opportunity side is real",              body:"AI could unlock ₹621B for India's GDP (NASSCOM). 170M new jobs globally by 2030 (WEF). India's engineering strength means it can capture AI build roles at scale."},
+];
+
+const igEl = document.getElementById('insight-grid');
+insights.forEach(ins => {
+  const card = document.createElement('div');
+  card.className = 'insight-card';
+  card.innerHTML = `<div class="ic-icon">${ins.icon}</div><div class="ic-title">${ins.title}</div><div class="ic-body">${ins.body}</div>`;
+  igEl.appendChild(card);
+});
+
+// ── CITIES DATA ──
+const cities = [
+  {
+    name: "Bengaluru", state: "Karnataka", score: 9.2, risk: "very-high",
+    techWorkers: "2.1M", atRisk: "~800K",
+    industries: [
+      {label:"IT Services", type:"danger"},
+      {label:"Software R&D", type:"danger"},
+      {label:"BPO / GCC", type:"danger"},
+      {label:"Startups", type:"warning"},
+      {label:"Aerospace", type:"safe"},
+    ],
+    why: "India's Silicon Valley. 35%+ of its formal workforce is in IT or IT-adjacent roles — exactly the jobs AI automates first. Freshers in TCS, Infosys, Wipro campuses are already feeling it.",
+    waves: [
+      {year:"2026", text:"Junior QA testers, data entry, BPO L1 support automated. 50,000+ roles at risk."},
+      {year:"2027", text:"Mid-level coders and software testers displaced by AI coding agents."},
+      {year:"2028", text:"GCC back-office functions significantly reduced; startups replace 3 engineers with 1 + AI."},
+      {year:"2030", text:"Net outcome depends on city's ability to pivot to AI infra, chip design, robotics engineering."},
+    ]
+  },
+  {
+    name: "Hyderabad", state: "Telangana", score: 9.0, risk: "very-high",
+    techWorkers: "1.8M", atRisk: "~650K",
+    industries: [
+      {label:"IT / ITES", type:"danger"},
+      {label:"Pharma R&D", type:"warning"},
+      {label:"BPO", type:"danger"},
+      {label:"Financial Services", type:"warning"},
+      {label:"Defence", type:"safe"},
+    ],
+    why: "HITEC City is India's second Silicon Valley. Heavy concentration of Microsoft, Google, Amazon GCCs. Pharma buffers somewhat, but IT dominance makes it second most exposed.",
+    waves: [
+      {year:"2026", text:"BPO and data processing roles shrink 20–30%. IT fresher hiring freezes."},
+      {year:"2027", text:"AI agents handle pharma documentation, regulatory filing, clinical data processing."},
+      {year:"2028", text:"Mid-management layers in IT cut as AI handles project co-ordination."},
+      {year:"2030", text:"City's NASSCOM-led AI upskilling push will determine net employment outcome."},
+    ]
+  },
+  {
+    name: "Pune", state: "Maharashtra", score: 8.5, risk: "very-high",
+    techWorkers: "1.2M", atRisk: "~420K",
+    industries: [
+      {label:"IT / Engineering", type:"danger"},
+      {label:"Auto Manufacturing", type:"warning"},
+      {label:"BPO", type:"danger"},
+      {label:"BFSI", type:"warning"},
+      {label:"Education", type:"warning"},
+    ],
+    why: "Pune's dual identity — IT hub + auto manufacturing — gives it a partial hedge. Auto sector's physical nature resists AI, but the large IT-BPO belt faces the same pressures as Bengaluru.",
+    waves: [
+      {year:"2026", text:"BPO and back-office roles shed 25%. Auto sector unaffected."},
+      {year:"2027", text:"BFSI clerks and mid-level IT roles significantly transformed."},
+      {year:"2028", text:"Auto sector starts AI integration in design, quality control — support roles impacted."},
+      {year:"2030", text:"Manufacturing and engineering education pivot Pune toward safer AI-adjacent roles."},
+    ]
+  },
+  {
+    name: "Chennai", state: "Tamil Nadu", score: 8.2, risk: "very-high",
+    techWorkers: "1.1M", atRisk: "~380K",
+    industries: [
+      {label:"IT Services", type:"danger"},
+      {label:"Automobile", type:"warning"},
+      {label:"Manufacturing", type:"safe"},
+      {label:"Port & Logistics", type:"safe"},
+      {label:"Banking", type:"warning"},
+    ],
+    why: "Strong IT presence (TCS, Infosys, Cognizant all headquartered or major here), but significant auto and manufacturing base provides a structural buffer. Still in top-risk tier.",
+    waves: [
+      {year:"2026", text:"IT back-office and BPO roles under immediate pressure."},
+      {year:"2027", text:"Banking and insurance admin heavily automated. Legal support roles shrink."},
+      {year:"2028", text:"Auto sector sees AI in design and testing but physical production remains human."},
+      {year:"2030", text:"Port logistics and manufacturing act as employment anchor for displaced workers."},
+    ]
+  },
+  {
+    name: "NCR (Delhi)", state: "Delhi / UP / Haryana", score: 7.8, risk: "high",
+    techWorkers: "1.5M", atRisk: "~500K",
+    industries: [
+      {label:"Government / PSU", type:"safe"},
+      {label:"Media & Content", type:"danger"},
+      {label:"BFSI", type:"warning"},
+      {label:"Retail & Trade", type:"warning"},
+      {label:"IT / BPO", type:"danger"},
+    ],
+    why: "Huge diversity buffers NCR. Government and PSU employment (hard to automate politically) is massive. But the media, content, and fintech belt in Gurugram is highly exposed.",
+    waves: [
+      {year:"2026", text:"Content creators, journalists, ad-copy writers displaced by generative AI."},
+      {year:"2027", text:"Gurugram fintech and BFSI back-office significantly automated."},
+      {year:"2028", text:"E-commerce catalogue and customer ops teams shrink dramatically."},
+      {year:"2030", text:"Government employment acts as a stabiliser; overall impact moderate vs pure tech cities."},
+    ]
+  },
+  {
+    name: "Mumbai", state: "Maharashtra", score: 7.5, risk: "high",
+    techWorkers: "0.9M", atRisk: "~400K",
+    industries: [
+      {label:"Banking & Finance", type:"danger"},
+      {label:"Media & Film", type:"warning"},
+      {label:"Insurance", type:"danger"},
+      {label:"Legal Services", type:"warning"},
+      {label:"Retail", type:"warning"},
+    ],
+    why: "India's financial capital faces AI disruption in BFSI — its core industry. Banking back-office, insurance processing, and legal research are all high-exposure. But Mumbai's diversity and services breadth offer some resilience.",
+    waves: [
+      {year:"2026", text:"KYC, loan processing, insurance claims roles automated 20–30%."},
+      {year:"2027", text:"Stock broking support, wealth management assistants, legal clerks disrupted."},
+      {year:"2028", text:"Media and film production AI tools reduce editing, VFX support, scripting roles."},
+      {year:"2030", text:"Financial sector adapts fastest; Mumbai likely retains high-value finance jobs."},
+    ]
+  },
+  {
+    name: "Ahmedabad", state: "Gujarat", score: 5.8, risk: "medium",
+    techWorkers: "0.3M", atRisk: "~90K",
+    industries: [
+      {label:"Textiles", type:"safe"},
+      {label:"Trading & Commerce", type:"warning"},
+      {label:"Pharma", type:"warning"},
+      {label:"Diamond Processing", type:"safe"},
+      {label:"SME Manufacturing", type:"safe"},
+    ],
+    why: "Gujarat's commercial capital is heavily trade and manufacturing-oriented. Diamond cutting, textiles, and SME manufacturing are physical — hard to automate. Pharma documentation is the key exposure.",
+    waves: [
+      {year:"2026", text:"Pharma regulatory documentation begins AI transition. Accounting roles impacted."},
+      {year:"2027", text:"Trading and commerce admin digitises further; mid-level office roles shrink."},
+      {year:"2030", text:"Physical industries (diamonds, textiles) remain largely intact. Net impact moderate."},
+    ]
+  },
+  {
+    name: "Kolkata", state: "West Bengal", score: 5.5, risk: "medium",
+    techWorkers: "0.4M", atRisk: "~120K",
+    industries: [
+      {label:"IT / ITeS", type:"warning"},
+      {label:"Jute & Manufacturing", type:"safe"},
+      {label:"Healthcare", type:"safe"},
+      {label:"Education", type:"warning"},
+      {label:"Government", type:"safe"},
+    ],
+    why: "Kolkata has a growing IT sector (Sector V) but remains dominated by government, healthcare, education, and traditional industries — all more insulated. Smaller IT base means lower absolute job loss.",
+    waves: [
+      {year:"2026", text:"Back-office and BPO roles in Salt Lake / Sector V impacted."},
+      {year:"2027", text:"Education admin, content and tutoring platforms shift AI-first."},
+      {year:"2030", text:"Government employment and traditional sectors anchor city's employment base."},
+    ]
+  },
+  {
+    name: "Jaipur", state: "Rajasthan", score: 4.2, risk: "medium",
+    techWorkers: "0.15M", atRisk: "~40K",
+    industries: [
+      {label:"Tourism & Hospitality", type:"safe"},
+      {label:"Gems & Jewellery", type:"safe"},
+      {label:"Handicrafts", type:"safe"},
+      {label:"Textiles", type:"safe"},
+      {label:"Emerging IT", type:"warning"},
+    ],
+    why: "The Pink City's economy is rooted in physical crafts, tourism, and jewellery — all highly resistant to AI. A small but growing IT sector is the only significant exposure zone.",
+    waves: [
+      {year:"2026", text:"Small IT/BPO cluster impacted. Tourism sector unaffected."},
+      {year:"2030", text:"Handicrafts and jewellery remain human-crafted — a safe economic anchor."},
+    ]
+  },
+  {
+    name: "Surat", state: "Gujarat", score: 3.8, risk: "medium",
+    techWorkers: "0.05M", atRisk: "~15K",
+    industries: [
+      {label:"Diamond Cutting", type:"safe"},
+      {label:"Textiles & Synthetics", type:"safe"},
+      {label:"Trading", type:"warning"},
+      {label:"Construction", type:"safe"},
+      {label:"Small Commerce", type:"safe"},
+    ],
+    why: "Surat is a physical economy city. Diamond polishing, textile production, and construction dominate. AI has minimal foothold here — the lowest-risk major city in India.",
+    waves: [
+      {year:"2027", text:"Trading and wholesale admin sees some digital automation."},
+      {year:"2030", text:"Physical industries remain core; Surat is among India's safest cities from AI displacement."},
+    ]
+  },
+];
+
+// ── RENDER CITY CARDS ──
+function renderCities() {
+  const grid = document.getElementById('city-grid');
+  const rankList = document.getElementById('city-ranking-list');
+
+  // Cards (top 6 most impactful)
+  const topCities = [...cities].sort((a,b) => b.score - a.score).slice(0, 6);
+  topCities.forEach(c => {
+    const col = scoreColor(c.score);
+    const card = document.createElement('div');
+    card.className = `city-card risk-${c.risk}`;
+    const tags = c.industries.map(i => `<span class="city-ind-tag ${i.type}">${i.label}</span>`).join('');
+    const waves = c.waves.map(w => `
+      <div class="city-wave">
+        <span class="city-wave-year">${w.year}</span>
+        <span class="city-wave-text">${w.text}</span>
+      </div>`).join('');
+
+    card.innerHTML = `
+      <div class="city-top">
+        <div>
+          <div class="city-name">${c.name}</div>
+          <div class="city-state">${c.state}</div>
+        </div>
+        <div class="city-score-wrap">
+          <div class="city-score" style="color:${col}">${c.score}</div>
+          <div class="city-score-lbl">/ 10 exposure</div>
+        </div>
+      </div>
+      <div class="city-workers">
+        <div class="city-stat">
+          <div class="city-stat-num">${c.techWorkers}</div>
+          <div class="city-stat-lbl">tech / formal workers</div>
+        </div>
+        <div class="city-stat">
+          <div class="city-stat-num" style="color:${col}">${c.atRisk}</div>
+          <div class="city-stat-lbl">jobs at risk by 2030</div>
+        </div>
+      </div>
+      <div class="city-bar-row">
+        <div class="city-bar-label"><span>AI Exposure</span><span style="color:${col};font-weight:700">${c.score}/10</span></div>
+        <div class="city-bar-wrap"><div class="city-bar-fill" style="width:${c.score*10}%;background:${col}"></div></div>
+      </div>
+      <div class="city-industries">
+        <div class="city-ind-label">Key industries</div>
+        <div class="city-ind-tags">${tags}</div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:12px;">${c.why}</p>
+      <div class="city-impact">
+        <div class="city-impact-label">Impact timeline</div>
+        ${waves}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Full ranking table
+  const allSorted = [...cities].sort((a,b) => b.score - a.score);
+  allSorted.forEach((c, i) => {
+    const col = scoreColor(c.score);
+    const pct = (c.score / 10) * 100;
+    const riskLabel = c.risk === 'very-high' ? 'Very High' : c.risk.charAt(0).toUpperCase() + c.risk.slice(1);
+    const row = document.createElement('div');
+    row.className = 'cr-row';
+    row.innerHTML = `
+      <div class="cr-rank">${i+1}</div>
+      <div>
+        <div class="cr-city-name">${c.name}</div>
+        <div class="cr-city-state">${c.state}</div>
+      </div>
+      <div class="cr-at-risk">${c.atRisk}</div>
+      <div class="cr-bar-wrap"><div class="cr-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+      <div class="cr-score" style="color:${col}">${c.score}/10</div>
+    `;
+    rankList.appendChild(row);
+  });
+}
+
+renderCities();
+
+
+function buildTreemap() {
+  const wrap = document.getElementById('treemap-wrap');
+  const W = wrap.offsetWidth || 800;
+  const H = Math.min(W * 0.62, 500);
+  const svg = document.getElementById('treemap-svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
+
+  const data = sectors.map(s => ({...s, v: Math.sqrt(s.workersN)}));
+  const rects = [];
+
+  function layout(items, x, y, w, h) {
+    if (!items.length) return;
+    if (items.length === 1) { rects.push({...items[0], x, y, w, h}); return; }
+    const half = items.reduce((a, b) => a + b.v, 0) / 2;
+    let acc = 0, split = 0;
+    for (let i = 0; i < items.length; i++) { acc += items[i].v; if (acc >= half) { split = i + 1; break; } }
+    const a = items.slice(0, split), b = items.slice(split);
+    const av = a.reduce((s, i) => s + i.v, 0), bv = b.reduce((s, i) => s + i.v, 0);
+    if (w >= h) {
+      const aw = w * (av / (av + bv));
+      layout(a, x, y, aw, h); layout(b, x + aw, y, w - aw, h);
+    } else {
+      const ah = h * (av / (av + bv));
+      layout(a, x, y, w, ah); layout(b, x, y + ah, w, h - ah);
+    }
+  }
+
+  const s2 = [...data].sort((a, b) => b.v - a.v);
+  layout(s2, 2, 2, W - 4, H - 4);
+
+  svg.innerHTML = '';
+  const tt = document.getElementById('tooltip');
+
+  // Background
+  const bg = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  bg.setAttribute('width', W); bg.setAttribute('height', H);
+  bg.setAttribute('fill', '#F7F8FA'); bg.setAttribute('rx', '12');
+  svg.appendChild(bg);
+
+  rects.forEach(r => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    const col = scoreColor(r.score);
+
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x', r.x + 1.5); rect.setAttribute('y', r.y + 1.5);
+    rect.setAttribute('width', Math.max(r.w - 3, 0));
+    rect.setAttribute('height', Math.max(r.h - 3, 0));
+    rect.setAttribute('rx', '6');
+    rect.setAttribute('fill', col);
+    rect.setAttribute('fill-opacity', '0.9');
+    rect.setAttribute('stroke', '#F7F8FA');
+    rect.setAttribute('stroke-width', '2.5');
+    g.appendChild(rect);
+
+    const fw = r.w - 16, fh = r.h - 16;
+    if (fw > 28 && fh > 16) {
+      const tx = document.createElementNS('http://www.w3.org/2000/svg','text');
+      const cx = r.x + 1.5 + (r.w - 3) / 2;
+      const cy = r.y + 1.5 + (r.h - 3) / 2;
+      tx.setAttribute('text-anchor', 'middle');
+      tx.setAttribute('dominant-baseline', 'middle');
+      tx.setAttribute('fill', '#fff');
+      tx.setAttribute('font-weight', '700');
+      tx.setAttribute('font-family', 'Inter, system-ui, sans-serif');
+
+      const words = r.name.split(' ');
+      const fs = fw > 110 ? 13 : fw > 70 ? 11 : fw > 40 ? 9 : 8;
+      tx.setAttribute('font-size', fs);
+
+      if (fw > 80 && words.length > 1 && fh > 34) {
+        const half2 = Math.ceil(words.length / 2);
+        const l1 = words.slice(0, half2).join(' ');
+        const l2 = words.slice(half2).join(' ');
+        const lh = fs * 1.3;
+        tx.innerHTML = `<tspan x="${cx}" y="${cy - lh/2}">${l1}</tspan><tspan x="${cx}" y="${cy + lh/2}">${l2}</tspan>`;
+      } else {
+        const maxC = Math.floor(fw / (fs * 0.58));
+        tx.setAttribute('x', cx); tx.setAttribute('y', cy);
+        tx.textContent = r.name.length > maxC ? r.name.slice(0, maxC - 1) + '…' : r.name;
+      }
+      g.appendChild(tx);
+
+      if (fh > 50 && fw > 55) {
+        const sc = document.createElementNS('http://www.w3.org/2000/svg','text');
+        sc.setAttribute('x', cx);
+        sc.setAttribute('y', r.y + 1.5 + (r.h - 3) - 8);
+        sc.setAttribute('text-anchor', 'middle');
+        sc.setAttribute('fill', 'rgba(255,255,255,0.7)');
+        sc.setAttribute('font-size', '9');
+        sc.setAttribute('font-family', 'Inter, system-ui, sans-serif');
+        sc.textContent = r.score + '/10';
+        g.appendChild(sc);
+      }
+    }
+
+    g.style.cursor = 'pointer';
+    g.addEventListener('mousemove', e => {
+      const cRect = wrap.getBoundingClientRect();
+      const tx2 = e.clientX - cRect.left, ty2 = e.clientY - cRect.top;
+      tt.style.display = 'block';
+      tt.style.left = (tx2 + 14) + 'px';
+      tt.style.top  = (ty2 - 14) + 'px';
+      if (tx2 + 230 > W) tt.style.left = (tx2 - 230) + 'px';
+      document.getElementById('tt-name').textContent    = r.name;
+      document.getElementById('tt-score').textContent   = r.score + '/10';
+      document.getElementById('tt-score').style.color   = scoreColor(r.score);
+      document.getElementById('tt-workers').textContent = r.workers;
+      document.getElementById('tt-salary').textContent  = r.salary;
+      document.getElementById('tt-risk').textContent    = r.risk;
+    });
+    g.addEventListener('mouseleave', () => { tt.style.display = 'none'; });
+    svg.appendChild(g);
+  });
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'treemap') setTimeout(buildTreemap, 40);
+}
+
+setTimeout(buildTreemap, 120);
+window.addEventListener('resize', () => {
+  if (document.getElementById('tab-treemap').classList.contains('active')) buildTreemap();
+});
+</script>
+</body>
+</html>
